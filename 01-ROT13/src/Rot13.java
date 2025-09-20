@@ -15,7 +15,7 @@ public class Rot13 {
 
     public static void main(String[] args) {
         // Array de strings con las pruebas
-        String[] proves = { "ABC", "XYZ", "Hola, Mr. calçot", // Array de string de pruebas
+        String[] proves = { "ABC", "XYZ", "Hola, Mr. calçot", 
                 "Perdó, per tu què és?" };
 
         System.out.println("------- CIFRADO ---------");
