@@ -81,7 +81,7 @@ public class Rot13 {
             int posicio = buscaLletra(arrayAbecedari, caracter);
             if (posicio != -1) { // si la posicion no es -1, es decir que se encuentra en el abecedario
                 // Cogemos la nueva posicion restandole 13 para descrifrar y sumandole la
-                // longitud del abacedario para que no se quede en negativo
+                // longitud del abecedario para que no se quede en negativo
                 // Hacemos el modulo por si la suma de la longitud se pasa de la longitud de la
                 // array del abecedario
                 int posicionNueva = (posicio - 13 + arrayAbecedari.length) % arrayAbecedari.length;
@@ -112,7 +112,7 @@ public class Rot13 {
      * Y nos devolvera una posicion segun si se encuentra esa letra en el abecedario
      */
     public static int buscaLletra(char[] abecedari, char lletra) {
-        for (int i = 0; i < abecedari.length; i++) { // reccoremos el abecedario
+        for (int i = 0; i < abecedari.length; i++) { // recorremos el abecedario
             char caracter = abecedari[i]; // Cogemos el caracter del abecedario
             if (lletra == caracter) { // Si la letra de nuestra cadena coincide con la del abecedario
                 return i; // devolvemos la posicion en la que esta
