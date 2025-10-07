@@ -112,6 +112,10 @@ public class Monoalfabetic {
         return textoDescifrado;
     }
 
+    /*
+     * Esta funcion le pasamos la array del abecedario y un caracter
+     * Y nos devolvera una posicion segun si se encuentra esa letra en el abecedario
+     */
     public static int buscaLletra(char[] abecedari, char letra) {
         for (int i = 0; i < abecedari.length; i++) {
             char caracter = abecedari[i];
