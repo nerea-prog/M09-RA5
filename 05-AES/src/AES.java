@@ -66,13 +66,21 @@ public class AES {
 
     public static String desxifraAES(byte[] bIvIMsgXifrat, String clau) throws Exception{
         //Extreure l'IV
+        byte[] iv = new byte[MIDA_IV];
+        System.arraycopy(bIvIMsgXifrat, 0, iv, 0, MIDA_IV);
         //Extreure la part xifrada
+        byte[] msgXifrat = new byte[bIvIMsgXifrat.length - MIDA_IV];
+        System.arraycopy(bIvIMsgXifrat, MIDA_IV, msgXifrat, 0, msgXifrat.length);
         //Fer hash de la clau
+        MessageDigest messageDigest = MessageDigest.getInstance(ALGORISME_HASH);
+        byte[] hashKey = messageDigest.digest(clau.getBytes());
+        SecretKey clauSecreta = new SecretKeySpec(hashKey, ALGORISME_XIFRAT);
         //Desxifrar
+        IvParameterSpec ivParameterSpec = new IvParameterSpec(iv);
+        Cipher descrifrado = Cipher.getInstance(FORMAT_AES);
+        descrifrado.init(Cipher.DECRYPT_MODE, clauSecreta, ivParameterSpec);
+        byte[] msgDesxifrat = descrifrado.doFinal(msgXifrat);
         //return String desifrat
+        return new String(msgDesxifrat);
     }
-
-
-
-
 }
