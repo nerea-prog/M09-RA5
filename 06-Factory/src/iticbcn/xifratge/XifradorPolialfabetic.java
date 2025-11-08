@@ -94,14 +94,14 @@ public class XifradorPolialfabetic implements Xifrador {
      */
 
     public String xifraPoliAlfa(String msg, String clau) throws Exception {
-        long clauL;
+        long clauLong;
         try {
-            clauL = Long.parseLong(clau);
+            clauLong = Long.parseLong(clau);
         }
         catch (NumberFormatException e){
             throw new ClauNoSuportada("La clau per xifrat Polialfabètic ha de ser un String convertible a long");
         }
-        initRandom(clauL);
+        initRandom(clauLong);
         String textoCifrado = "";
         for (int i = 0; i < msg.length(); i++) {
             char caracter = msg.charAt(i);
@@ -130,14 +130,14 @@ public class XifradorPolialfabetic implements Xifrador {
      */
 
     public String desxifraPoliAlfa(String msgXifrat, String clau) throws Exception {
-        long clauL;
+        long clauLong;
         try {
-            clauL = Long.parseLong(clau);
+            clauLong = Long.parseLong(clau);
         }
         catch (NumberFormatException e){
             throw new ClauNoSuportada("La clau per xifrat Polialfabètic ha de ser un String convertible a long");
         }
-        initRandom(clauL);
+        initRandom(clauLong);
         String textoDescifrado = "";
         for (int i = 0; i < msgXifrat.length(); i++) {
             char caracter = msgXifrat.charAt(i);
