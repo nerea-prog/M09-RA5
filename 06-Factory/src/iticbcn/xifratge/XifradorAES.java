@@ -1,4 +1,4 @@
-package itibcn.xifratge;
+package iticbcn.xifratge;
 
 
 
@@ -48,7 +48,7 @@ public class XifradorAES implements Xifrador {
         IvParameterSpec ivParameterSpec = new IvParameterSpec(iv);
         //Generar hash
         MessageDigest messageDigest = MessageDigest.getInstance(ALGORISME_HASH);
-        byte[] hashKey = messageDigest.digest(CLAU.getBytes());
+        byte[] hashKey = messageDigest.digest(clau.getBytes());
         SecretKeySpec clauSecreta = new SecretKeySpec(hashKey, ALGORISME_XIFRAT);
         //Encrypt
         Cipher cifrado = Cipher.getInstance(FORMAT_AES);
@@ -72,7 +72,7 @@ public class XifradorAES implements Xifrador {
         //Fer hash de la clau
         MessageDigest messageDigest = MessageDigest.getInstance(ALGORISME_HASH);
         byte[] hashKey = messageDigest.digest(clau.getBytes());
-        SecretKey clauSecreta = new SecretKeySpec(hashKey, ALGORISME_XIFRAT);
+        SecretKeySpec clauSecreta = new SecretKeySpec(hashKey, ALGORISME_XIFRAT);
         //Desxifrar
         IvParameterSpec ivParameterSpec = new IvParameterSpec(iv);
         Cipher descrifrado = Cipher.getInstance(FORMAT_AES);

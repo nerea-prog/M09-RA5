@@ -1,4 +1,4 @@
-package itibcn.xifratge;
+package iticbcn.xifratge;
 
 /*
  * Enunciat
@@ -32,6 +32,31 @@ public class XifradorPolialfabetic implements Xifrador {
     static char[] alfabetoPermutado = new char[abecedario.length];
     private static Random random = null;
 
+        @Override
+    public TextXifrat xifra(String msg, String clau) throws ClauNoSuportada{
+        try {
+            String msgXifrat = xifraPoliAlfa(msg, clau);
+            return new TextXifrat(msgXifrat.getBytes());
+            
+        } catch (Exception e) {
+            throw new ClauNoSuportada(e.getMessage());
+        }
+    }
+
+    @Override
+    public String desxifra(TextXifrat xifrat, String clau) throws ClauNoSuportada{
+        
+        if (xifrat == null) {
+            System.out.println("La clau de Polialfabètic ha de ser un String convertible a long");
+            return null;
+        }
+        try {
+            return desxifraPoliAlfa(new String(xifrat.getBytes()), clau);
+        } catch (Exception e) {
+            throw new ClauNoSuportada(e.getMessage());
+        }
+    }
+
 
     public static void initRandom(long clauSecreta) {
         random = new Random(clauSecreta);
@@ -60,15 +85,7 @@ public class XifradorPolialfabetic implements Xifrador {
 
     }
 
-    @Override
-    public TextXifrat xifra(String msg, String clau) throws ClauNoSuportada{
 
-    }
-
-    @Override
-    public String desxifra(TextXifrat xifrat, String clau) throws ClauNoSuportada{
-
-    }
     /*
      * Función que le pasamos la cadena
      * permuta el alfabeto cada vez cogemos una letra
@@ -76,7 +93,15 @@ public class XifradorPolialfabetic implements Xifrador {
      * delvuelve el texto cifrado con el alfabeto permutado
      */
 
-    public String xifraPoliAlfa(String msg) {
+    public String xifraPoliAlfa(String msg, String clau) throws Exception {
+        long clauL;
+        try {
+            clauL = Long.parseLong(clau);
+        }
+        catch (NumberFormatException e){
+            throw new ClauNoSuportada("La clau per xifrat Polialfabètic ha de ser un String convertible a long");
+        }
+        initRandom(clauL);
         String textoCifrado = "";
         for (int i = 0; i < msg.length(); i++) {
             char caracter = msg.charAt(i);
@@ -104,7 +129,15 @@ public class XifradorPolialfabetic implements Xifrador {
      * delvuelve el texto cifrado con el alfabeto original
      */
 
-    public String desxifraPoliAlfa(String msgXifrat) {
+    public String desxifraPoliAlfa(String msgXifrat, String clau) throws Exception {
+        long clauL;
+        try {
+            clauL = Long.parseLong(clau);
+        }
+        catch (NumberFormatException e){
+            throw new ClauNoSuportada("La clau per xifrat Polialfabètic ha de ser un String convertible a long");
+        }
+        initRandom(clauL);
         String textoDescifrado = "";
         for (int i = 0; i < msgXifrat.length(); i++) {
             char caracter = msgXifrat.charAt(i);

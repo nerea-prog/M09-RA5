@@ -1,4 +1,4 @@
-package itibcn.xifratge;
+package iticbcn.xifratge;
 
 
 /*
@@ -48,6 +48,9 @@ public class XifradorMonoalfabetic implements Xifrador{
 
     @Override
     public TextXifrat xifra(String msg, String clau) throws ClauNoSuportada{
+        if (clau != null) {
+            throw new ClauNoSuportada("Xifratxe monoalfabètic no suporta clau != null");
+        }
         try {
             String msgXifrat = xifraMonoAlfa(msg);
             return new TextXifrat(msgXifrat.getBytes());
@@ -59,12 +62,14 @@ public class XifradorMonoalfabetic implements Xifrador{
 
     @Override
     public String desxifra(TextXifrat xifrat, String clau) throws ClauNoSuportada{
+        if (clau != null) {
+            throw new ClauNoSuportada("Xifratxe monoalfabètic no suporta clau != null");
+        }
         try {
             return desxifrarMonoAlfa(new String(xifrat.getBytes()));
         } catch (Exception e) {
             throw new ClauNoSuportada("Error al desxifrar: " + e.getMessage());
         }
-
     }
 
     /*

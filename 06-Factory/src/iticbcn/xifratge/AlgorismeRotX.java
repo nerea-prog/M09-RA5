@@ -1,6 +1,6 @@
-package itibcn.xifratge;
+package iticbcn.xifratge;
 
-public abstract class AlgorismeRotX extends AlgorismeFactory {
+public class AlgorismeRotX extends AlgorismeFactory {
     @Override
     public Xifrador creaXifrador(){
         return new XifradorRotX();

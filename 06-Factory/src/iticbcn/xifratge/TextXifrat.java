@@ -1,6 +1,5 @@
-package itibcn.xifratge;
+package iticbcn.xifratge;
 
-import java.util.Arrays;
 
 public class TextXifrat {
     private byte[] bytes;

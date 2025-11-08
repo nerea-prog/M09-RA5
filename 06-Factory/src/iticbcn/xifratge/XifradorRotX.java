@@ -1,4 +1,4 @@
-package itibcn.xifratge;
+package iticbcn.xifratge;
 /*
  * Enunciat
 Crea una classe Java anomenada RotX.java que contingui les següents funcions:
@@ -15,42 +15,44 @@ public class XifradorRotX implements Xifrador {
     static char[] arrayAbecedari = "aáàäbcçdeéèëfghiíìïjklmnñoóòöpqrstuúùüvwxyz".toCharArray();
     static char[] arrayAbecedariM = "aáàäbcçdeéèëfghiíìïjklmnñoóòöpqrstuúùüvwxyz".toUpperCase().toCharArray();
 
-    public static void main(String[] args) {
-        String[] proves = { "ABC", "XYZ", "Hola, Mr. calçot",
-                "Perdó, per tu què és?" };
-
-        System.out.println("------- CIFRADO ---------");
-        for (int i = 0; i < proves.length; i++) {
-            String cadena = proves[i];
-            String cadenaCifrada = xifraRotX(cadena, i * 2);
-            System.out.println("(" + i * 2 + ")-" + cadena + " --> " + cadenaCifrada);
-        }
-        System.out.println("------ DESCRIFRADO --------");
-        for (int i = 0; i < proves.length; i++) {
-            String cadena = proves[i];
-            String cadenaCifrada = xifraRotX(cadena, i * 2);
-            String cadenaDescifrada = desxifraRotX(cadenaCifrada, i * 2);
-            System.out.println("(" + i * 2 + ")-" + cadenaCifrada + " --> " + cadenaDescifrada);
-            if (i == proves.length - 1) {
-                forcaBrutaRotX(cadenaCifrada);
-            }
-        }
-    }
 
     @Override
-    public TextXifrat xifra(String msg, String clau) throws ClauNoSuportada){
-
+    public TextXifrat xifra(String msg, String clau) throws ClauNoSuportada{
+        try {
+            String msgXifrat = xifraRotX(msg, clau);
+            return new TextXifrat(msgXifrat.getBytes());
+            
+        } catch (Exception e) {
+            throw new ClauNoSuportada(e.getMessage());
+        }
     }
 
     @Override
     public String desxifra(TextXifrat xifrat, String clau) throws ClauNoSuportada{
-
+        if (xifrat == null) {
+            System.out.println("Clau de RotX ha de ser un sencer de 0 a 40");
+            return null;
+        }
+        try {
+            return desxifraRotX(new String(xifrat.getBytes()), clau);
+        } catch (Exception e) {
+            throw new ClauNoSuportada(e.getMessage());
+        }
     }
     /*
      * Esta funcion le pasamos por parametro una cadena
      * y nos devolvera el texto cifrado
      */
-    public String xifraRotX(String cadena, int desplaçament) {
+    public String xifraRotX(String cadena, String clau) throws Exception {
+        int clauInt;
+        try {
+            clauInt = Integer.parseInt(clau);
+            if (clauInt < 0 || clauInt > 40) {
+                throw new ClauNoSuportada("Clau de RotX ha de ser un sencer de 0 a 40");
+            }
+        } catch (Exception e) {
+            throw new ClauNoSuportada("Clau de RotX ha de ser un sencer de 0 a 40");
+        }
         String textoCifrado = "";
         for (int i = 0; i < cadena.length(); i++) {
             char caracter = cadena.charAt(i);
@@ -58,12 +60,12 @@ public class XifradorRotX implements Xifrador {
             if (posicio != -1) { // si la posicion no es -1, es decir que se encuentra en el abecedario
                 // cogemos la nueva posicion sumandole 13 y hacemos el modulo para no pasarnos
                 // de posicion
-                int posicionNueva = (posicio + desplaçament) % arrayAbecedari.length;
+                int posicionNueva = (posicio + clauInt) % arrayAbecedari.length;
                 textoCifrado += arrayAbecedari[posicionNueva];
             } else {
                 posicio = buscaLletra(arrayAbecedariM, caracter);
                 if (posicio != -1) {
-                    int posicionNueva = (posicio + desplaçament) % arrayAbecedariM.length;
+                    int posicionNueva = (posicio + clauInt) % arrayAbecedariM.length;
                     textoCifrado += arrayAbecedariM[posicionNueva];
                 } else {
                     textoCifrado += caracter;
@@ -77,7 +79,16 @@ public class XifradorRotX implements Xifrador {
      * Esta funcion le pasamos por parametro una cadena
      * y nos devolvera el texto descrifrado
      */
-    public String desxifraRotX(String cadena, int desplaçament) {
+    public String desxifraRotX(String cadena, String clau) throws Exception {
+        int clauInt;
+        try {
+            clauInt = Integer.parseInt(clau);
+            if (clauInt < 0 || clauInt > 40) {
+                throw new ClauNoSuportada("Clau de RotX ha de ser un sencer de 0 a 40");
+            }
+        } catch (Exception e) {
+            throw new ClauNoSuportada("Clau de RotX ha de ser un sencer de 0 a 40");
+        }
         String textoDescrifrado = "";
         for (int i = 0; i < cadena.length(); i++) {
             char caracter = cadena.charAt(i);
@@ -87,12 +98,12 @@ public class XifradorRotX implements Xifrador {
                 // longitud del abecedario para que no se quede en negativo
                 // Hacemos el modulo por si la suma de la longitud se pasa de la longitud de la
                 // array del abecedario
-                int posicionNueva = (posicio - desplaçament + arrayAbecedari.length) % arrayAbecedari.length;
+                int posicionNueva = (posicio - clauInt + arrayAbecedari.length) % arrayAbecedari.length;
                 textoDescrifrado += arrayAbecedari[posicionNueva];
             } else {
                 posicio = buscaLletra(arrayAbecedariM, caracter);
                 if (posicio != -1) {
-                    int posicionNueva = (posicio - desplaçament + arrayAbecedari.length) % arrayAbecedariM.length;
+                    int posicionNueva = (posicio - clauInt + arrayAbecedari.length) % arrayAbecedariM.length;
                     textoDescrifrado += arrayAbecedariM[posicionNueva];
                 } else {
                     textoDescrifrado += caracter;
@@ -102,18 +113,6 @@ public class XifradorRotX implements Xifrador {
 
         }
         return textoDescrifrado;
-    }
-    /*
-     * Esta funcion le pasamos la string cifrada por parametro
-     * Imprimira esa string
-     * Recorrera la longitud del abecedario e imprimira cada descifrado que se vaya haciendo
-     */
-
-    public void forcaBrutaRotX(String cadenaCifrada) {
-        System.out.println("\nMissatge xifrat: " + cadenaCifrada + "\n");
-        for (int i = 0; i < arrayAbecedari.length; i++) {
-            System.out.println("(" + i + ") " + desxifraRotX(cadenaCifrada, i));
-        }
     }
 
     /*

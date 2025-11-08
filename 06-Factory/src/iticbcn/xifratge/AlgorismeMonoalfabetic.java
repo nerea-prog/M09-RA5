@@ -1,6 +1,6 @@
-package itibcn.xifratge;
+package iticbcn.xifratge;
 
-public abstract class AlgorismeMonoalfabetic extends AlgorismeFactory {
+public class AlgorismeMonoalfabetic extends AlgorismeFactory {
     @Override
     public Xifrador creaXifrador(){
         return new XifradorMonoalfabetic();

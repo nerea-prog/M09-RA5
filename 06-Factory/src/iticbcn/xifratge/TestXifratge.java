@@ -1,4 +1,4 @@
-package itibcn.xifratge;
+package iticbcn.xifratge;
 
 public class TestXifratge {
     public static void main(String[] args) {
