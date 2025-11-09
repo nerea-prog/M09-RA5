@@ -36,7 +36,7 @@ public class XifradorAES implements Xifrador {
         try {
             return desxifraAES(xifrat.getBytes(), clau);
         } catch (Exception e) {
-            System.err.println("Error xifrant " + e.getMessage());
+            System.err.println("Error desxifrant " + e.getMessage());
             System.exit(1);
             return null;
         }
