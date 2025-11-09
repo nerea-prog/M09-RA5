@@ -19,14 +19,19 @@ import java.util.Collections;
 import java.util.List;
 
 public class XifradorMonoalfabetic implements Xifrador{
-    static char[] abecedario = "aáàäbcçdeéèëfghiíìïjklmnñoóòöpqrstuúùüvwxyz".toUpperCase().toCharArray();
-    static char[] alfabetoPermutado = permutaAlfabet(abecedario);
+    private final char[] abecedario;
+    private final char[] alfabetoPermutado;
+
+    public XifradorMonoalfabetic(){
+        abecedario = "aáàäbcçdeéèëfghiíìïjklmnñoóòöpqrstuúùüvwxyz".toUpperCase().toCharArray();
+        alfabetoPermutado = permutaAlfabet(abecedario); 
+    }
     /*
      * Función que le pasamos el alfabeto original 
      * y devuelve el alfabeto mezclado
      */
 
-    public static char[] permutaAlfabet(char[] alfabet) {
+    public char[] permutaAlfabet(char[] alfabet) {
 
         //Pasamos el alfabeto que esta en una array de char a una lista
         List<Character> lista = new ArrayList<>();

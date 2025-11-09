@@ -27,12 +27,12 @@ import java.util.List;
 import java.util.Random;
 
 public class XifradorPolialfabetic implements Xifrador {
-    private static long clauSecreta = 1234;
-    static char[] abecedario = "aáàäbcçdeéèëfghiíìïjklmnñoóòöpqrstuúùüvwxyz".toUpperCase().toCharArray();
-    static char[] alfabetoPermutado = new char[abecedario.length];
-    private static Random random = null;
+    private long clauSecreta = 1234;
+    private char[] abecedario = "aáàäbcçdeéèëfghiíìïjklmnñoóòöpqrstuúùüvwxyz".toUpperCase().toCharArray();
+    private char[] alfabetoPermutado = new char[abecedario.length];
+    private Random random = null;
 
-        @Override
+    @Override
     public TextXifrat xifra(String msg, String clau) throws ClauNoSuportada{
         try {
             String msgXifrat = xifraPoliAlfa(msg, clau);
@@ -58,7 +58,7 @@ public class XifradorPolialfabetic implements Xifrador {
     }
 
 
-    public static void initRandom(long clauSecreta) {
+    public void initRandom(long clauSecreta) {
         random = new Random(clauSecreta);
     }
 
@@ -67,7 +67,7 @@ public class XifradorPolialfabetic implements Xifrador {
      * y nos mezcla el alfabeto
      */
 
-    public static void permutaAlfabet(char[] alfabet) {
+    public void permutaAlfabet(char[] alfabet) {
 
         // Pasamos el alfabeto que esta en una array de char a una lista
         List<Character> lista = new ArrayList<>();

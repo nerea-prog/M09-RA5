@@ -16,7 +16,7 @@ public class XifradorAES implements Xifrador {
     public static final String FORMAT_AES = "AES/CBC/PKCS5Padding";
     
     private static final int MIDA_IV = 16;
-    private static byte[] iv = new byte[MIDA_IV];
+    private byte[] iv = new byte[MIDA_IV];
     private static final String CLAU = "1234";
 
     @Override
@@ -25,7 +25,9 @@ public class XifradorAES implements Xifrador {
             byte[] msgXifrat = XifraAES(msg, clau);
             return new TextXifrat(msgXifrat);
         } catch (Exception e) {
-            throw new ClauNoSuportada("Error al xifrar:" + e.getMessage());
+            System.err.println("Error xifrant " + e.getMessage());
+            System.exit(1);
+            return null;
         }
     }
 
@@ -34,7 +36,9 @@ public class XifradorAES implements Xifrador {
         try {
             return desxifraAES(xifrat.getBytes(), clau);
         } catch (Exception e) {
-            throw new ClauNoSuportada("Error al desxifrar: " + e.getMessage());
+            System.err.println("Error xifrant " + e.getMessage());
+            System.exit(1);
+            return null;
         }
     }
     
