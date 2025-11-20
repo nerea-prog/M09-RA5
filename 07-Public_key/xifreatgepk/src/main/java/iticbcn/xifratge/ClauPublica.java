@@ -14,23 +14,23 @@ public class ClauPublica {
 
 
     public KeyPair generaParellClausRSA() throws Exception{
-        KeyPairGenerator keyGen = KeyPairGenerator.getInstance(algorisme);
+        KeyPairGenerator genClaus = KeyPairGenerator.getInstance(algorisme);
         SecureRandom random = new SecureRandom();
-        keyGen.initialize(2048, random);
-        return keyGen.generateKeyPair();
+        genClaus.initialize(2048, random);
+        return genClaus.generateKeyPair();
     }
 
     public byte[] xifraRSA(String msg, PublicKey clauPublica) throws Exception{
-        Cipher cipher = Cipher.getInstance(algorisme);
-        cipher.init(Cipher.ENCRYPT_MODE, clauPublica);
-        byte[] msgXifrat = cipher.doFinal(msg.getBytes()); // Convertimos el cifrado de string a byte
+        Cipher xifrador = Cipher.getInstance(algorisme);
+        xifrador.init(Cipher.ENCRYPT_MODE, clauPublica);
+        byte[] msgXifrat = xifrador.doFinal(msg.getBytes()); // Convertimos el cifrado de string a byte
         return msgXifrat;
     }
 
     public String desxifraRSA(byte[] msgXifrat, PrivateKey ClauPrivada) throws Exception{
-        Cipher cipher = Cipher.getInstance(algorisme);
-        cipher.init(Cipher.DECRYPT_MODE, ClauPrivada);
-        byte[] msgDesxifrat = cipher.doFinal(msgXifrat);
+        Cipher xifrador = Cipher.getInstance(algorisme);
+        xifrador.init(Cipher.DECRYPT_MODE, ClauPrivada);
+        byte[] msgDesxifrat = xifrador.doFinal(msgXifrat);
         return new String(msgDesxifrat);
     }  
 }
