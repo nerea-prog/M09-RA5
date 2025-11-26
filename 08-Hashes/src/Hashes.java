@@ -8,7 +8,7 @@ import javax.crypto.spec.PBEKeySpec;
 public class Hashes {
 
     private int npass = 0;
-    private final String[] algorismes = {"SHA-512", "PBKDF2"};
+    private final String[] algorismes = {"SHA-512", "PBKDF2WithHmacSHA512"};
     
     // Metodo hash
     public String getSHA512AmbSalt(String pw, String salt) throws Exception{
@@ -92,7 +92,22 @@ public class Hashes {
     }
 
     public String getInterval(long t1, long t2){
+        long diff = t2 - t1;
 
+        long dies = diff / 86_400_000;
+        diff %= 86_400_000;
+
+        long hores = diff / 3600000;
+        diff %= 3600000;
+
+        long minuts = diff / 60000;
+        diff %= 60000;
+
+        long segons = diff / 1000;
+        long milis = diff % 1000;
+
+        return String.format("temps: %d dies / %d hores / %d minuts / %d segons / %d milis", 
+            dies, hores, minuts, segons, milis);
     }
     public static void main(String[] args) throws Exception {
         String salt = "qpoweiruañslkdfjz";
@@ -100,7 +115,7 @@ public class Hashes {
         Hashes h = new Hashes();
         String[] aHashes = { h.getSHA512AmbSalt(pw, salt), h.getPBKDF2AmbSalt(pw, salt)};
         String pwTrobat = null;
-        String[] algorismes ={"SHA-512", "PBKDF2"};
+        String[] algorismes ={"SHA-512", "PBKDF2WithHmacSHA512"};
         for (int i = 0; i < aHashes.length; i++) {
             System.out.printf("===========================\n");
             System.out.printf("Algorisme: %s\n", algorismes[i]);
